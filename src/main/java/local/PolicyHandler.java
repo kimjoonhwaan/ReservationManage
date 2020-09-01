@@ -46,8 +46,10 @@ public class PolicyHandler{
             //  병원일정 삭제로 인한 , 스케쥴 상태 변경
             List<Reservation> list = reservationRepository.findByHospitalId(String.valueOf(hospitalDeleted.getId()));
             for(Reservation temp : list){
-                temp.setStatus("ForcedCanceled");
-                reservationRepository.save(temp);
+                if(!"CANCELED".equals(temp.getStatus())) {
+                    temp.setStatus("FORCE_CANCELED");
+                    reservationRepository.save(temp);
+                }
             }
         }
     }
