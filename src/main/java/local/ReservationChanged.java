@@ -1,36 +1,14 @@
+
 package local;
 
-import javax.persistence.*;
-import org.springframework.beans.BeanUtils;
-import java.util.List;
+public class ReservationChanged extends AbstractEvent {
 
-@Entity
-@Table(name="Reservation_table")
-public class Reservation {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private Long screeningId;
     private String hospitalId;
     private String hospitalNm;
     private String custNm;
     private String status;
-
-    @PostPersist
-    public void onPostPersist(){
-        ReservationCompleted reservationCompleted = new ReservationCompleted();
-        BeanUtils.copyProperties(this, reservationCompleted);
-        reservationCompleted.publishAfterCommit();
-    }
-
-    @PostUpdate
-    public void onPostUpdate(){
-        ReservationChanged reservationChanged = new ReservationChanged();
-        BeanUtils.copyProperties(this, reservationChanged);
-        reservationChanged.publishAfterCommit();
-    }
-
 
     public Long getId() {
         return id;
@@ -74,8 +52,4 @@ public class Reservation {
     public void setStatus(String status) {
         this.status = status;
     }
-
-
-
-
 }

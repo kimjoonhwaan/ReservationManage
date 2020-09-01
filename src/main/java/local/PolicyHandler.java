@@ -22,7 +22,7 @@ public class PolicyHandler{
     }
 
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverScreeningRequested_ReservationCompleted(@Payload Requested requested){
+    public void wheneverScreeningRequested_ReservationComplete(@Payload Requested requested){
 
         if(requested.isMe()){
             //  검진 요청으로 인한 예약 확정
@@ -39,7 +39,7 @@ public class PolicyHandler{
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverHospitalDeleted_ForcedReservationCanceled(@Payload HospitalDeleted hospitalDeleted){
+    public void wheneverHospitalDeleted_ForcedReservationCancel(@Payload HospitalDeleted hospitalDeleted){
 
         if(hospitalDeleted.isMe()){
             System.out.println("##### listener ForcedReservationCanceled : " + hospitalDeleted.toJson());
@@ -54,7 +54,7 @@ public class PolicyHandler{
         }
     }
     @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverCanceled_ReservationCanceled(@Payload Canceled canceled){
+    public void wheneverCanceled_ReservationCancel(@Payload Canceled canceled){
 
         if(canceled.isMe()){
             //  검진예약 취소로 인한 취소
