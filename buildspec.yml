@@ -30,11 +30,11 @@ phases:
       - echo Build started on `date`
       - echo Building the Docker image...
       - mvn package -Dmaven.test.skip=true
-      - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION  .
+      - docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-reservationmanage:$CODEBUILD_RESOLVED_SOURCE_VERSION  .
   post_build:
     commands:
       - echo Pushing the Docker image...
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-reservationmanage:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo connect kubectl
       - echo create namespace
       - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
@@ -79,7 +79,7 @@ phases:
             spec:
               containers:
                 - name: reservationmanage
-                  image: $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
+                  image: $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/user09-reservationmanage:$CODEBUILD_RESOLVED_SOURCE_VERSION
                   ports:
                     - containerPort: 8080
                   imagePullPolicy: Always
