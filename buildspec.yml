@@ -4,7 +4,7 @@ env:
   variables:
     _PROJECT_NAME: "reservationmanage"
     _NAMESPACE: "skcc-ns"
-    _AWS_REGION: "us-east-2"
+    _AWS_REGION: "ap-northeast-2"
 
 phases:
   install:
@@ -47,38 +47,38 @@ phases:
         apiVersion: v1
         kind: Service
         metadata:
-          name: $_PROJECT_NAME
+          name: reservationmanage
           namespace: $_NAMESPACE
           labels:
-            app: $_PROJECT_NAME
+            app: reservationmanage
         spec:
           ports:
             - port: 8080
               targetPort: 8080
           selector:
-            app: $_PROJECT_NAME
+            app: reservationmanage
         EOF
       - |
         cat  <<EOF | kubectl apply -f -
         apiVersion: apps/v1
         kind: Deployment
         metadata:
-          name: $_PROJECT_NAME
+          name: reservationmanage
           namespace: $_NAMESPACE
           labels:
-            app: $_PROJECT_NAME
+            app: reservationmanage
         spec:
           replicas: 1
           selector:
             matchLabels:
-              app: $_PROJECT_NAME
+              app: reservationmanage
           template:
             metadata:
               labels:
-                app: $_PROJECT_NAME
+                app: reservationmanage
             spec:
               containers:
-                - name: $_PROJECT_NAME
+                - name: reservationmanage
                   image: $AWS_ACCOUNT_ID.dkr.ecr.$_AWS_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
                   ports:
                     - containerPort: 8080
